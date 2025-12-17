@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Dhruv!</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+    body {
+        margin: 0;
+        font-family: 'Pacifico', cursive;
+        background-color: #1b1b1b;
+        color: #fff;
+        overflow: hidden;
+    }
+    .page {
+        display: none;
+        width: 100vw;
+        height: 100vh;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+    }
+    .active {
+        display: flex;
+    }
+    h1 {
+        font-size: 3em;
+        color: #800000; /* maroon */
+        margin-bottom: 20px;
+        animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+    .cake {
+        position: relative;
+        width: 200px;
+        height: 200px;
+        margin-bottom: 20px;
+        cursor: pointer;
+    }
+    .cake-base {
+        width: 150px;
+        height: 100px;
+        background: linear-gradient(#800000, #b22222);
+        margin: 0 auto;
+        border-radius: 10px;
+        position: absolute;
+        bottom: 0;
+    }
+    .candle {
+        width: 20px;
+        height: 50px;
+        background: #ffcc00;
+        position: absolute;
+        top: -50px;
+        left: 50%;
+        margin-left: -10px;
+        border-radius: 5px;
+    }
+    .flame {
+        width: 10px;
+        height: 20px;
+        background: orange;
+        position: absolute;
+        top: -20px;
+        left: 50%;
+        margin-left: -5px;
+        border-radius: 50%;
+        animation: flicker 0.3s infinite;
+    }
+    @keyframes flicker {
+        0% { transform: translateY(0) scale(1); opacity: 1; }
+        50% { transform: translateY(-2px) scale(1.1); opacity: 0.8; }
+        100% { transform: translateY(0) scale(1); opacity: 1; }
+    }
+    button {
+        padding: 10px 20px;
+        font-size: 1.2em;
+        border: none;
+        border-radius: 10px;
+        background-color: #800000;
+        color: #fff;
+        cursor: pointer;
+        margin-top: 20px;
+        transition: transform 0.2s;
+    }
+    button:hover {
+        transform: scale(1.1);
+    }
+    .message {
+        font-size: 1.8em;
+        color: #ffdd00;
+        margin-bottom: 20px;
+    }
+    .confetti {
+        position: fixed;
+        width: 10px;
+        height: 10px;
+        background: randomColor();
+        animation: fall 3s linear infinite;
+    }
+    @keyframes fall {
+        0% { transform: translateY(0) rotate(0deg); }
+        100% { transform: translateY(100vh) rotate(360deg); }
+    }
+</style>
+</head>
+<body>
+
+<!-- Page 1 -->
+<div id="page1" class="page active">
+    <h1>🎉 Happy Birthday Dhruv! 🎉</h1>
+    <div class="cake">
+        <div class="cake-base"></div>
+        <div class="candle" id="candle">
+            <div class="flame" id="flame"></div>
+        </div>
+    </div>
+    <button id="blowBtn">Blow Candle in 3 sec</button>
+</div>
+
+<!-- Page 2 -->
+<div id="page2" class="page">
+    <div class="message">Even though we met a few weeks ago, it feels like I’ve known you for years! You’re a great friend! 🎈</div>
+    <div class="cake" id="teaseCake">
+        <div class="cake-base"></div>
+    </div>
+    <div>Try to click the cake! 😏</div>
+</div>
+
+<audio id="bgMusic" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" autoplay loop></audio>
+
+<script>
+let countdown = 3;
+const blowBtn = document.getElementById('blowBtn');
+const flame = document.getElementById('flame');
+
+blowBtn.addEventListener('click', () => {
+    const interval = setInterval(() => {
+        blowBtn.textContent = 'Blow in ' + countdown + ' sec';
+        countdown--;
+        if(countdown < 0) {
+            clearInterval(interval);
+            flame.style.display = 'none';
+            blowBtn.style.display = 'none';
+            launchConfetti();
+            setTimeout(() => {
+                document.getElementById('page1').classList.remove('active');
+                document.getElementById('page2').classList.add('active');
+            }, 1000);
+        }
+    }, 1000);
+});
+
+function launchConfetti() {
+    for(let i=0; i<100; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = Math.random()*100 + 'vw';
+        confetti.style.backgroundColor = `hsl(${Math.random()*360}, 100%, 50%)`;
+        confetti.style.animationDuration = (2+Math.random()*3) + 's';
+        document.body.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 4000);
+    }
+}
+
+// Teasing cake game
+const teaseCake = document.getElementById('teaseCake');
+teaseCake.addEventListener('click', () => {
+    const maxX = window.innerWidth - 200;
+    const maxY = window.innerHeight - 200;
+    const randX = Math.random() * maxX;
+    const randY = Math.random() * maxY;
+    teaseCake.style.position = 'absolute';
+    teaseCake.style.left = randX + 'px';
+    teaseCake.style.top = randY + 'px';
+    alert("Haha! You can't catch me 😏");
+});
+</script>
+</body>
+</html>
