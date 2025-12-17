@@ -1,186 +1,217 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Birthday Dhruv!</title>
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
-    body {
-        margin: 0;
-        font-family: 'Pacifico', cursive;
-        background-color: #1b1b1b;
-        color: #fff;
-        overflow: hidden;
-    }
-    .page {
-        display: none;
-        width: 100vw;
-        height: 100vh;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        text-align: center;
-    }
-    .active {
-        display: flex;
-    }
-    h1 {
-        font-size: 3em;
-        color: #800000; /* maroon */
-        margin-bottom: 20px;
-        animation: pulse 1.5s infinite;
-    }
-    @keyframes pulse {
-        0% { transform: scale(1); }
-        50% { transform: scale(1.05); }
-        100% { transform: scale(1); }
-    }
-    .cake {
-        position: relative;
-        width: 200px;
-        height: 200px;
-        margin-bottom: 20px;
-        cursor: pointer;
-    }
-    .cake-base {
-        width: 150px;
-        height: 100px;
-        background: linear-gradient(#800000, #b22222);
-        margin: 0 auto;
-        border-radius: 10px;
-        position: absolute;
-        bottom: 0;
-    }
-    .candle {
-        width: 20px;
-        height: 50px;
-        background: #ffcc00;
-        position: absolute;
-        top: -50px;
-        left: 50%;
-        margin-left: -10px;
-        border-radius: 5px;
-    }
-    .flame {
-        width: 10px;
-        height: 20px;
-        background: orange;
-        position: absolute;
-        top: -20px;
-        left: 50%;
-        margin-left: -5px;
-        border-radius: 50%;
-        animation: flicker 0.3s infinite;
-    }
-    @keyframes flicker {
-        0% { transform: translateY(0) scale(1); opacity: 1; }
-        50% { transform: translateY(-2px) scale(1.1); opacity: 0.8; }
-        100% { transform: translateY(0) scale(1); opacity: 1; }
-    }
-    button {
-        padding: 10px 20px;
-        font-size: 1.2em;
-        border: none;
-        border-radius: 10px;
-        background-color: #800000;
-        color: #fff;
-        cursor: pointer;
-        margin-top: 20px;
-        transition: transform 0.2s;
-    }
-    button:hover {
-        transform: scale(1.1);
-    }
-    .message {
-        font-size: 1.8em;
-        color: #ffdd00;
-        margin-bottom: 20px;
-    }
-    .confetti {
-        position: fixed;
-        width: 10px;
-        height: 10px;
-        background: randomColor();
-        animation: fall 3s linear infinite;
-    }
-    @keyframes fall {
-        0% { transform: translateY(0) rotate(0deg); }
-        100% { transform: translateY(100vh) rotate(360deg); }
-    }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Dhruv!</title>
+    <style>
+        :root {
+            --maroon: #4a0404;
+            --black: #0a0a0a;
+            --gold: #d4af37;
+            --rich-white: #fdf5e6;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Georgia', serif;
+            background-color: var(--black);
+            color: var(--rich-white);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            text-align: center;
+            width: 90%;
+            max-width: 600px;
+            padding: 40px;
+            border: 2px solid var(--gold);
+            background: linear-gradient(135deg, var(--black) 0%, var(--maroon) 100%);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+            border-radius: 15px;
+            position: relative;
+        }
+
+        .hidden { display: none !important; }
+
+        /* Page 1: The Cake */
+        #countdown { font-size: 3rem; color: var(--gold); margin-bottom: 20px; }
+        
+        .cake {
+            position: relative;
+            width: 150px;
+            height: 100px;
+            background: #630606;
+            margin: 60px auto 20px;
+            border-radius: 10px 10px 0 0;
+        }
+        .cake::before {
+            content: "";
+            position: absolute;
+            top: -15px; left: 0;
+            width: 150px; height: 30px;
+            background: #800000;
+            border-radius: 50%;
+        }
+
+        .candle {
+            position: absolute;
+            width: 10px;
+            height: 40px;
+            background: var(--gold);
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .flame {
+            position: absolute;
+            width: 15px;
+            height: 20px;
+            background: orange;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            top: -20px;
+            left: -2.5px;
+            box-shadow: 0 0 10px orange;
+            animation: flicker 0.1s infinite alternate;
+        }
+
+        @keyframes flicker {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
+        }
+
+        /* Page 2: Letter */
+        #letter p { line-height: 1.6; font-size: 1.2rem; }
+        .highlight { color: var(--gold); font-weight: bold; }
+
+        /* Page 3: Game */
+        #game-area {
+            height: 200px;
+            border: 1px dashed var(--gold);
+            position: relative;
+            margin-top: 20px;
+            overflow: hidden;
+        }
+        #gift-box {
+            position: absolute;
+            cursor: pointer;
+            font-size: 2rem;
+            transition: 0.2s;
+        }
+
+        button {
+            background: var(--gold);
+            color: var(--black);
+            border: none;
+            padding: 10px 20px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
 
-<!-- Page 1 -->
-<div id="page1" class="page active">
-    <h1>🎉 Happy Birthday Dhruv! 🎉</h1>
-    <div class="cake">
-        <div class="cake-base"></div>
-        <div class="candle" id="candle">
-            <div class="flame" id="flame"></div>
+    <div id="page1" class="container">
+        <h1 style="color: var(--gold);">Happy Birthday, Dhruv!</h1>
+        <div id="countdown">5</div>
+        <div class="cake">
+            <div class="candle"><div class="flame" id="flame"></div></div>
         </div>
+        <p id="instruction">Wait for the countdown...</p>
+        <button id="blow-btn" class="hidden" onclick="blowCandle()">BLOW CANDLE! 🎂</button>
     </div>
-    <button id="blowBtn">Blow Candle in 3 sec</button>
-</div>
 
-<!-- Page 2 -->
-<div id="page2" class="page">
-    <div class="message">Even though we met a few weeks ago, it feels like I’ve known you for years! You’re a great friend! 🎈</div>
-    <div class="cake" id="teaseCake">
-        <div class="cake-base"></div>
+    <div id="page2" class="container hidden">
+        <h2 class="highlight">To a Great Friend</h2>
+        <div id="letter">
+            <p>Dhruv, it’s crazy to think we only met a few weeks ago.</p>
+            <p>Even in that short time, it feels like I’ve known you for years. You're an incredible person and I'm so glad we crossed paths in this digital world.</p>
+            <p>May your year be as <span class="highlight">rich and vibrant</span> as these colors!</p>
+        </div>
+        <button onclick="nextPage(3)">See Your Gift? 🎁</button>
     </div>
-    <div>Try to click the cake! 😏</div>
-</div>
 
-<audio id="bgMusic" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" autoplay loop></audio>
+    <div id="page3" class="container hidden">
+        <h2>Catch Your Present!</h2>
+        <p>You have to catch it to open it! (Stop being slow 😜)</p>
+        <div id="game-area">
+            <div id="gift-box">🎁</div>
+        </div>
+        <p id="game-status">Score: 0/5</p>
+    </div>
 
-<script>
-let countdown = 3;
-const blowBtn = document.getElementById('blowBtn');
-const flame = document.getElementById('flame');
+    <script>
+        let count = 5;
+        const countdownEl = document.getElementById('countdown');
+        const blowBtn = document.getElementById('blow-btn');
+        const instruction = document.getElementById('instruction');
 
-blowBtn.addEventListener('click', () => {
-    const interval = setInterval(() => {
-        blowBtn.textContent = 'Blow in ' + countdown + ' sec';
-        countdown--;
-        if(countdown < 0) {
-            clearInterval(interval);
-            flame.style.display = 'none';
-            blowBtn.style.display = 'none';
-            launchConfetti();
+        // Countdown Logic
+        const timer = setInterval(() => {
+            count--;
+            countdownEl.innerText = count;
+            if (count === 0) {
+                clearInterval(timer);
+                countdownEl.innerText = "Ready?";
+                instruction.innerText = "Click the button to blow the candle!";
+                blowBtn.classList.remove('hidden');
+            }
+        }, 1000);
+
+        function blowCandle() {
+            document.getElementById('flame').classList.add('hidden');
+            instruction.innerText = "You did it! ✨";
             setTimeout(() => {
-                document.getElementById('page1').classList.remove('active');
-                document.getElementById('page2').classList.add('active');
-            }, 1000);
+                nextPage(2);
+            }, 1500);
         }
-    }, 1000);
-});
 
-function launchConfetti() {
-    for(let i=0; i<100; i++) {
-        const confetti = document.createElement('div');
-        confetti.className = 'confetti';
-        confetti.style.left = Math.random()*100 + 'vw';
-        confetti.style.backgroundColor = `hsl(${Math.random()*360}, 100%, 50%)`;
-        confetti.style.animationDuration = (2+Math.random()*3) + 's';
-        document.body.appendChild(confetti);
-        setTimeout(() => confetti.remove(), 4000);
-    }
-}
+        function nextPage(num) {
+            document.getElementById('page1').classList.add('hidden');
+            document.getElementById('page2').classList.add('hidden');
+            document.getElementById('page3').classList.add('hidden');
+            document.getElementById('page' + num).classList.remove('hidden');
+            if(num === 3) initGame();
+        }
 
-// Teasing cake game
-const teaseCake = document.getElementById('teaseCake');
-teaseCake.addEventListener('click', () => {
-    const maxX = window.innerWidth - 200;
-    const maxY = window.innerHeight - 200;
-    const randX = Math.random() * maxX;
-    const randY = Math.random() * maxY;
-    teaseCake.style.position = 'absolute';
-    teaseCake.style.left = randX + 'px';
-    teaseCake.style.top = randY + 'px';
-    alert("Haha! You can't catch me 😏");
-});
-</script>
+        // Game Logic
+        let score = 0;
+        function initGame() {
+            const gift = document.getElementById('gift-box');
+            const area = document.getElementById('game-area');
+            
+            function moveGift() {
+                const x = Math.random() * (area.clientWidth - 40);
+                const y = Math.random() * (area.clientHeight - 40);
+                gift.style.left = x + 'px';
+                gift.style.top = y + 'px';
+            }
+
+            gift.addEventListener('mouseover', () => {
+                if(score < 5) moveGift(); // Tease him by moving away
+            });
+
+            gift.addEventListener('click', () => {
+                score++;
+                document.getElementById('game-status').innerText = `Score: ${score}/5`;
+                if(score >= 5) {
+                    alert("Okay, okay! You caught it! Happy Birthday Dhruv! 🎂✨");
+                    gift.style.transform = "scale(5)";
+                    document.getElementById('game-status').innerText = "Friendship unlocked forever! 🔓";
+                } else {
+                    moveGift();
+                }
+            });
+            moveGift();
+        }
+    </script>
 </body>
 </html>
